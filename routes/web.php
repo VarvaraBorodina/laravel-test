@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\SiteController;
+use \App\Models\Product;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $list = Product::query()
+        ->where('status', true)
+        ->where('price', '>', '1000')
+        ->get();
+
+    return view('main');
 });
+Route::get('store', function () {
+    return view('store');
+});
+
+Route::get('hello', [SiteController::class, 'index']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
