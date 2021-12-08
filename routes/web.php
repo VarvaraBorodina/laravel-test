@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\SiteController;
 use \App\Models\Product;
+use \App\Models\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,15 +16,28 @@ use \App\Models\Product;
 */
 
 Route::get('/', function () {
-    $list = Product::query()
+    /*$list = Product::query()
         ->where('status', true)
         ->where('price', '>', '1000')
-        ->get();
+        ->get();*/
+
+    $category = new Category();
+    $category->name = "Smartphones";
+    $category->save();
+
+    $data = [
+        'name' => 'Laptops'
+    ];
+    Category::create($data);
 
     return view('main');
 });
 Route::get('store', function () {
     return view('store');
+});
+
+Route::get('product', function () {
+    return view('product');
 });
 
 Route::get('hello', [SiteController::class, 'index']);
