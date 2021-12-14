@@ -380,7 +380,7 @@
                 </div>
 
                 @foreach($products as $item)
-                    @if($item->price > 1000)
+                    @if($item->price < 10)
                     <!-- product -->
                         <div class="col-md-3 col-xs-6">
                             <div class="product">
