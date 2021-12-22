@@ -32,12 +32,17 @@ Route::get('/', function () {
     Category::create($data);*/
     return view('main');
 });
+Route::get('admin',function (){
+    return view('admin.index');
+});
+Route::prefix('admin')->name('admin.')->group(function (){
+    Route::resources([
+        'brand' => \App\Http\Controllers\admin\BrandController::class,
+        'category' => \App\Http\Controllers\admin\CategoryController::class,
+        'product' => \App\Http\Controllers\admin\ProductController::class
+    ]);
+});
 
-Route::get('show-form', [FormController::class, 'showForm'])->name('showForm');
-Route::post('show-form', [FormController::class, 'postForm'])->name('namePostForm');
-Route::get('product/{id?}', [ProductController::class, 'index'])->name('show-product');
-
-Route::get('catalog', [ProductController::class, 'catalog'])->name('catalog');
 
 
 Route::get('store', function () {
@@ -45,8 +50,17 @@ Route::get('store', function () {
 });
 
 
+Route::get('show-form', [FormController::class, 'showForm'])->name('showForm');
+Route::post('show-form', [FormController::class, 'postForm'])->name('namePostForm');
+
+Route::get('product/{id?}', [ProductController::class, 'index'])->name('show-product');
+Route::get('catalog', [ProductController::class, 'catalog'])->name('catalog');
+
+
+
 Route::get('hello', [SiteController::class, 'index']);
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+

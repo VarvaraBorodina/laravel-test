@@ -36,16 +36,14 @@
                     <h3 class="aside-title">Categories</h3>
                     <div class="checkbox-filter">
                         @foreach($categories as $category)
-                            @if($category->status)
                         <div class="input-checkbox">
-                            <input type="checkbox" id="category-1">
-                            <label for="category-1">
+                            <input type="checkbox" id="{{$category->id}}">
+                            <label for="{{$category->id}}">
                                 <span></span>
                                 {{$category->name}}
                                 <small>(120)</small>
                             </label>
                         </div>
-                            @endif
                                 @endforeach
                     </div>
                 </div>
@@ -77,16 +75,14 @@
                     <div class="checkbox-filter">
 
                         @foreach($brands as $brand)
-                            @if($brand->status)
                         <div class="input-checkbox">
-                            <input type="checkbox" id="brand-1">
-                            <label for="brand-1">
+                            <input type="checkbox" id="{{$brand->id}}">
+                            <label for="{{$brand->id}}">
                                 <span></span>
                               {{  $brand->name}}
                                 <small>(578)</small>
                             </label>
                         </div>
-                            @endif
                         @endforeach
 
 

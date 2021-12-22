@@ -23,8 +23,8 @@ class ProductController extends Controller
         $products = Product::
             where('status', 1)
             ->paginate($offset);
-        $brands = Brand::all();
-        $categories = Category::all();
+        $brands = Brand::where('status',1)->get();;
+        $categories = Category::where('status',1)->get();
         return view('product.catalog',[
             'products' => $products,
             'brands' => $brands,
