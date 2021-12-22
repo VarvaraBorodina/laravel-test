@@ -30,7 +30,6 @@ class BrandController extends Controller
     public function create()
     {
         return view('admin.brand.create');
-
     }
 
     /**
@@ -77,7 +76,6 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //$data = $request->all();
         $brand->fill($request->all());
         $brand->save();
         return redirect(route('admin.brand.index'));
