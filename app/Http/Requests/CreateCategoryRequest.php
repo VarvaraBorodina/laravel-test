@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBrandRequest extends FormRequest
+class CreateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,15 @@ class CreateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'email|min:8'
+            'name'=>'required|max:15'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.min' => 'Too short',
-            'name.email' => 'Invalid email'
+            'name.max' => 'Too long',
+            'name.required' => 'Required field'
         ];
     }
 }
