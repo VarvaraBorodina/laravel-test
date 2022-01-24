@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,7 +17,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::paginate(7);
+        return view('admin.product.index',[
+            'products' => $products
+        ]);
     }
 
     /**
@@ -24,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.product.create');
     }
 
     /**
@@ -35,7 +41,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request->file('img');
+        $name = $file->getFilename();
+        $file->storeAs('products_images', $name.'.jpg', 'public');
+        $image = '/storage/products_images/'.$name.'.jpg';
+
+        $data = $request->all();
+        $data['img'] = $image;
+        $product = Product::create($data);
+        return redirect(route('admin.product.index'));
     }
 
     /**
@@ -44,9 +58,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        return view('admin.product.show', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -55,9 +71,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        return view('admin.product.edit', compact('product'));
     }
 
     /**
@@ -67,9 +83,21 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $file = $request->file('img');
+        $name = $file->getFilename();
+        $file->storeAs('products_images', $name.'.jpg', 'public');
+        $image = '/storage/products_images/'.$name.'.jpg';
+
+        $data = $request->all();
+        $data['img'] = $image;
+
+        \File::delete(public_path(Product::find($product->id)->img));
+
+        $product->fill($data);
+        $product->save();
+        return redirect(route('admin.product.index'));
     }
 
     /**
@@ -78,8 +106,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        \File::delete(public_path(Product::find($product->id)->img));
+        $product->delete();
+        return redirect(route('admin.product.index'));
     }
 }
