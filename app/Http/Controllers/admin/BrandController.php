@@ -40,13 +40,17 @@ class BrandController extends Controller
      */
     public function store(CreateBrandRequest $request)
     {
+        $filePath = $request->file('logo')->store('logos', 'public');
         $data = $request->all();
-        $brand = Brand::create($data);
+        $file = $request->file('logo');
+       // $data = $request->all();
+        //Brand::create($data);
         return redirect(route('admin.brand.index'));
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource;
+     *
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -74,7 +78,7 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(CreateBrandRequest $request, Brand $brand)
     {
         $brand->fill($request->all());
         $brand->save();

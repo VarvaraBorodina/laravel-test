@@ -3,11 +3,11 @@
     @dump($errors)
 <form action="{{route ('admin.brand.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
-    <input type="text" name="name">
+    <input type="text" name="name" value="{{old('name')}}">
     <br>
     <input type="file" name="logo">
     <br>
-    <textarea name="description" id="" cols="30" rows="10"></textarea>
+    <textarea name="description" id="" cols="30" rows="10" value={{old('description')}}></textarea>
     <br>
     <input type="checkbox" name="status" value="1">
     <br>

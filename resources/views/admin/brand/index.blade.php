@@ -23,6 +23,7 @@
                         <td>{{$loop->iteration + (($brands->currentPage() - 1) * $brands->perPage())}}</td>
                         <td>{{$brand->id}}</td>
                         <td>{{ $brand->name }}</td>
+                        <td>{{ asset('/storage'.$brand->logo) }}</td>
                         <td></td>
                         <td class="">
                             <a href="{{route('admin.brand.show', ['brand'=>$brand->id])}}" class="bth btn-sm btn-info">Показать</a>

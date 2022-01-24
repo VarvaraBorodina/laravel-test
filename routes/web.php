@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\CheckAuth;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\SiteController;
 use \App\Models\Product;
@@ -19,23 +21,13 @@ use \App\Models\Category;
 */
 
 Route::get('/', function () {
-    /*$list = Product::query()
-        ->where('status', true)
-        ->where('price', '>', '1000')
-        ->get();
-    $category = new Category();
-    $category->name = "Smartphones";
-    $category->save();
-    $data = [
-        'name' => 'Laptops'
-    ];
-    Category::create($data);*/
     return view('main');
 });
 Route::get('admin',function (){
     return view('admin.index');
 });
-Route::prefix('admin')->name('admin.')->group(function (){
+
+Route::/*middleware(['auth', CheckAuth::class])->*/prefix('admin')->name('admin.')->group(function (){
     Route::resources([
         'brand' => \App\Http\Controllers\admin\BrandController::class,
         'category' => \App\Http\Controllers\admin\CategoryController::class,
@@ -43,12 +35,13 @@ Route::prefix('admin')->name('admin.')->group(function (){
     ]);
 });
 
+Route::get('cart', [CartController::class, 'index'])->name('cart');
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
 
 Route::get('store', function () {
     return view('store');
 });
-
 
 Route::get('show-form', [FormController::class, 'showForm'])->name('showForm');
 Route::post('show-form', [FormController::class, 'postForm'])->name('namePostForm');
