@@ -42,12 +42,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $file = $request->file('img');
-        $name = $file->getFilename();
-        $file->storeAs('products_images', $name.'.jpg', 'public');
-        $image = '/storage/products_images/'.$name.'.jpg';
-
         $data = $request->all();
-        $data['img'] = $image;
+        if($file){
+            $name = $file->getFilename();
+            $file->storeAs('products_images', $name.'.jpg', 'public');
+            $image = '/storage/products_images/'.$name.'.jpg';
+            $data['img'] = $image;
+        }
         $product = Product::create($data);
         return redirect(route('admin.product.index'));
     }
@@ -86,14 +87,14 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $file = $request->file('img');
-        $name = $file->getFilename();
-        $file->storeAs('products_images', $name.'.jpg', 'public');
-        $image = '/storage/products_images/'.$name.'.jpg';
-
         $data = $request->all();
-        $data['img'] = $image;
-
-        \File::delete(public_path(Product::find($product->id)->img));
+        if($file) {
+            $name = $file->getFilename();
+            $file->storeAs('products_images', $name.'.jpg', 'public');
+            $image = '/storage/products_images/'.$name.'.jpg';
+            $data['img'] = $image;
+            \File::delete(public_path(Product::find($product->id)->img));
+        }
 
         $product->fill($data);
         $product->save();
