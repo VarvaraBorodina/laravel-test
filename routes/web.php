@@ -39,8 +39,12 @@ Route::get('cart', [CartController::class, 'index'])->name('cart');
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
 
-Route::get('store', function () {
-    return view('store');
+Route::get('test', function () {
+    $balance = rand(0, 100);
+    dump($balance);
+    if($balance > 50){
+        \App\Events\BingoEvent::dispatch($balance);
+    }
 });
 
 Route::get('show-form', [FormController::class, 'showForm'])->name('showForm');
