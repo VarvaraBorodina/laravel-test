@@ -38,6 +38,8 @@ Route::/*middleware(['auth', CheckAuth::class])->*/prefix('admin')->name('admin.
 Route::get('cart', [CartController::class, 'index'])->name('cart');
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
+Route::get('wish-list', [\App\Http\Controllers\WishListController::class, 'index'])->name('wishList');
+Route::post('add-to-wish-list', [\App\Http\Controllers\WishListController::class, 'addToWishList'])->name('addToWishList');
 
 Route::get('test', function () {
     $balance = rand(0, 100);
