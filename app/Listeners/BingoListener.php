@@ -26,7 +26,7 @@ class BingoListener
      */
     public function handle(BingoEvent $event)
     {
-        \Illuminate\Support\Facades\Mail::to('lol@mail.ru')
+        \Illuminate\Support\Facades\Mail::to('borodinad313@gmail.com')
             ->send(new \App\Mail\BingoMail(1000));
 
     }

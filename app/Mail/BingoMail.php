@@ -33,12 +33,10 @@ class BingoMail extends Mailable
      */
     public function build()
     {
-        return $this->from('test@mail.ru','gjjgjg')
-            ->text('mails.bingo')
+        return $this->from('test@mail.ru','Varvara')
+            ->view('mails.bingo')
             ->with([
                 'message2' => 'Message text',
-            ])
-            ->attach('https://memepedia.ru/wp-content/uploads/2019/01/hamster.jpg');
-      //  return $this->view('view.name');
+            ]);
     }
 }
