@@ -2,8 +2,6 @@
 
 namespace App\Contracts;
 
-class ProductServiceInterface
+Interface ProductServiceInterface
 {
-    public function getProductById($id);
-
 }
