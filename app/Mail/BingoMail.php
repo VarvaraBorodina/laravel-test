@@ -17,13 +17,15 @@ class BingoMail extends Mailable
      * @return void
      */
 
-    public $balance;
     public $text;
+    public $name;
+    public $hello;
 
-    public function __construct($balance)
+    public function __construct($text, $name, $hello)
     {
-        $this->balance = $balance;
-        $this->text = 'hello world';
+        $this->hello = $hello;
+        $this->text = $text;
+        $this->name = $name;
     }
 
     /**
@@ -36,7 +38,9 @@ class BingoMail extends Mailable
         return $this->from('test@mail.ru','Varvara')
             ->view('mails.bingo')
             ->with([
-                'message2' => 'Message text',
+                'text' => $this->text,
+                'name' => $this->name,
+                'hello' => $this->hello,
             ]);
     }
 }

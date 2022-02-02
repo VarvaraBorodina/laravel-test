@@ -42,11 +42,11 @@ Route::get('wish-list', [\App\Http\Controllers\WishListController::class, 'index
 Route::post('add-to-wish-list', [\App\Http\Controllers\WishListController::class, 'addToWishList'])->name('addToWishList');
 
 Route::get('test', function () {
-    $response = Http::get('api.openweathermap.org/data/2.5/weather', [
+    /*$response = Http::get('api.openweathermap.org/data/2.5/weather', [
         'zip' => '220077.BY',
         'appid' => '7fc2fef2e53010d7ad3a3755ef938355',
     ]);
-    dump($response->object());
+    dump($response->object());*/
 });
 
 Route::get('show-form', [FormController::class, 'showForm'])->name('showForm');
