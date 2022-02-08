@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use PHPUnit\Exception;
 
 class SendEmailCommand extends Command
 {
@@ -12,7 +13,7 @@ class SendEmailCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:test {name*} {--Q|queue=default}';
+    protected $signature = 'command:email {userId} {text} {--H|hello}';
 
     /**
      * The console command description.
@@ -38,10 +39,19 @@ class SendEmailCommand extends Command
      */
     public function handle()
     {
-        $this->table(
-            ['Name', 'Email'],
-            User::all(['name', 'email'])->toArray()
-        );
+        $userId = $this->argument('userId');
+        $user = User::find($userId);
+
+        if ($user == null) {
+            $this->error("User not found!");
+        } else {
+            $text = $this->argument('text');
+            $hello = $this->option('hello');
+
+            \Illuminate\Support\Facades\Mail::to($user->email)
+                ->send(new \App\Mail\BingoMail($text, $user->name, $hello));
+        }
+
         return Command::SUCCESS;
     }
 }
